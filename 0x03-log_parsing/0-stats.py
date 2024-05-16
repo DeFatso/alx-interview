@@ -1,19 +1,24 @@
 #!/usr/bin/python3
+""" Initialize variables to store metrics """
+
 import sys
 import signal
 
-# Initialize variables to store metrics
 total_file_size = 0
 status_code_count = {}
 
 
 def print_statistics():
+    """ print """
+
     print(f"File size: {total_file_size}")
     for status_code in sorted(status_code_count.keys()):
         print(f"{status_code}: {status_code_count[status_code]}")
 
 
 def signal_handler(sig, frame):
+    """ sig hand """
+
     print_statistics()
     sys.exit(0)
 
