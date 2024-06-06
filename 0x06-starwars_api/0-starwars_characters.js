@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 const axios = require('axios');
 
 function getMovieCharacters (movieId) {
