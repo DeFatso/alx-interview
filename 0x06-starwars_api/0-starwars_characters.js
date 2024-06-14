@@ -1,30 +1,23 @@
 #!/usr/bin/node
-const axios = require('axios');
 
-function getMovieCharacters (movieId) {
-  axios.get(`https://swapi.dev/api/films/${movieId}/`)
-    .then(response => {
-      const characters = response.data.characters;
-      characters.forEach(characterUrl => {
-        axios.get(characterUrl)
-          .then(characterResponse => {
-            console.log(characterResponse.data.name);
-          })
-          .catch(error => {
-            console.log(`Error fetching character: ${error}`);
-          });
+const request = require('request');
+const url = `https://swapi-api.hbtn.io/api/films/${process.argv[2]}/`;
+request(url, async function (error, response, body) {
+  if (error) {
+    return console.log(error);
+  } else {
+    const characters = JSON.parse(body).characters;
+    for (const character in characters) {
+      const res = await new Promise((resolve, reject) => {
+        request(characters[character], (err, res, html) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(JSON.parse(html).name);
+          }
+        });
       });
-    })
-    .catch(error => {
-      console.log(`Error fetching movie: ${error}`);
-    });
-}
-
-const args = process.argv.slice(2);
-if (args.length !== 1) {
-  console.log('Usage: node script.js <movie_id>');
-  process.exit(1);
-}
-
-const movieId = args[0];
-getMovieCharacters(movieId);
+      console.log(res);
+    }
+  }
+});
