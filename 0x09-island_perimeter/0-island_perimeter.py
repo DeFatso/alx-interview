@@ -5,6 +5,10 @@
 
 
 def island_perimeter(grid):
+    """"
+    island parameter
+    """
+
     if not grid:
         return 0
 
