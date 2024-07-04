@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Determine the winner of each game round between Maria and Ben. """
 
 def isWinner(x, nums):
     """ Determine the winner of each game round between Maria and Ben. """
